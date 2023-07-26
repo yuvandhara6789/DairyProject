@@ -16,9 +16,11 @@ import com.dairy.dto.Response;
 import com.dairy.model.milkCollection.CombinationColletionWithQc;
 import com.dairy.model.milkCollection.MilkCollection;
 import com.dairy.model.milkCollection.MilkCollectionQC;
+import com.dairy.model.sansthaMaster.PurRateExcleImport;
 import com.dairy.repository.milkCollection.CombCollectionQCRepo;
 import com.dairy.repository.milkCollection.MilkCollectionQCRepo;
 import com.dairy.repository.milkCollection.MilkCollectionRepo;
+import com.dairy.repository.sansthaMaster.PurRateExcelImportRepo;
 import com.dairy.service.MilkCollectionService;
 import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
 
@@ -36,6 +38,8 @@ public class MilkCollectionController {
 	
 	@Autowired
 	private CombCollectionQCRepo combCollectionQCRepo ;
+	
+	@Autowired PurRateExcelImportRepo purRateExcelImportRepo;
 
 //MILK COLLECTION	
 	// Save Milk Collection Details
@@ -149,6 +153,10 @@ public class MilkCollectionController {
 			response .setStatus("not success");
 		}
 		return response;
+	}
+	
+	public List<PurRateExcleImport> showgitmethod(){
+		return purRateExcelImportRepo.findAll();
 	}
 
 	// Retrieve All Data
