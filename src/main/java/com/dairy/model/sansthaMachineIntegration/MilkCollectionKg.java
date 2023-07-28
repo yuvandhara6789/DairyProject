@@ -1,4 +1,4 @@
-package com.dairy.model.milkCollection;
+package com.dairy.model.sansthaMachineIntegration;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,47 +7,60 @@ import javax.persistence.Id;
 import javax.persistence.Transient;
 
 @Entity
-public class MilkCollectionManualKG {
+public class MilkCollectionKg {
+ 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	private String collectionDate;
-	private String dock;
+	private String date;
+	private int    inwardId;
+	private String selectDock;
 	private String milkType;
 	private String collectionType;
 	private String sansthaName;
+	private String mobileNo;
 	private String routeName;
 	private String rateType;
 	private String address;
 	private String sampleNo;
-	private String sansthaCode;
-	private String canQty;
 	private String weightKg;
 	private String weightLtr;
-	private String sourcanQty;
+	private String sansthaCode;
+	private String canQty;
+	private String machineWeight;
+	private String sourCanQty;
 	private String sourWeight;
-	private String mobileNo;
+	
 	@Transient
-	private String fdate;
+	private String fDate;
+	
 	@Transient
-	private String tdate;
+	private String tDate;
+	
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getCollectionDate() {
-		return collectionDate;
+	
+	public String getDate() {
+		return date;
 	}
-	public void setCollectionDate(String collectionDate) {
-		this.collectionDate = collectionDate;
+	public void setDate(String date) {
+		this.date = date;
 	}
-	public String getDock() {
-		return dock;
+	public int getInwardId() {
+		return inwardId;
 	}
-	public void setDock(String dock) {
-		this.dock = dock;
+	public void setInwardId(int inwardId) {
+		this.inwardId = inwardId;
+	}
+	public String getSelectDock() {
+		return selectDock;
+	}
+	public void setSelectDock(String selectDock) {
+		this.selectDock = selectDock;
 	}
 	public String getMilkType() {
 		return milkType;
@@ -66,6 +79,12 @@ public class MilkCollectionManualKG {
 	}
 	public void setSansthaName(String sansthaName) {
 		this.sansthaName = sansthaName;
+	}
+	public String getMobileNo() {
+		return mobileNo;
+	}
+	public void setMobileNo(String mobileNo) {
+		this.mobileNo = mobileNo;
 	}
 	public String getRouteName() {
 		return routeName;
@@ -91,18 +110,6 @@ public class MilkCollectionManualKG {
 	public void setSampleNo(String sampleNo) {
 		this.sampleNo = sampleNo;
 	}
-	public String getSansthaCode() {
-		return sansthaCode;
-	}
-	public void setSansthaCode(String sansthaCode) {
-		this.sansthaCode = sansthaCode;
-	}
-	public String getCanQty() {
-		return canQty;
-	}
-	public void setCanQty(String canQty) {
-		this.canQty = canQty;
-	}
 	public String getWeightKg() {
 		return weightKg;
 	}
@@ -115,11 +122,29 @@ public class MilkCollectionManualKG {
 	public void setWeightLtr(String weightLtr) {
 		this.weightLtr = weightLtr;
 	}
-	public String getSourcanQty() {
-		return sourcanQty;
+	public String getSansthaCode() {
+		return sansthaCode;
 	}
-	public void setSourcanQty(String sourcanQty) {
-		this.sourcanQty = sourcanQty;
+	public void setSansthaCode(String sansthaCode) {
+		this.sansthaCode = sansthaCode;
+	}
+	public String getCanQty() {
+		return canQty;
+	}
+	public void setCanQty(String canQty) {
+		this.canQty = canQty;
+	}
+	public String getMachineWeight() {
+		return machineWeight;
+	}
+	public void setMachineWeight(String machineWeight) {
+		this.machineWeight = machineWeight;
+	}
+	public String getSourCanQty() {
+		return sourCanQty;
+	}
+	public void setSourCanQty(String sourCanQty) {
+		this.sourCanQty = sourCanQty;
 	}
 	public String getSourWeight() {
 		return sourWeight;
@@ -127,24 +152,17 @@ public class MilkCollectionManualKG {
 	public void setSourWeight(String sourWeight) {
 		this.sourWeight = sourWeight;
 	}
-	public String getMobileNo() {
-		return mobileNo;
-	}
-	public void setMobileNo(String mobileNo) {
-		this.mobileNo = mobileNo;
-	}
-	public String getFdate() {
-		return fdate;
-	}
-	public void setFdate(String fdate) {
-		this.fdate = fdate;
-	}
-	public String getTdate() {
-		return tdate;
-	}
-	public void setTdate(String tdate) {
-		this.tdate = tdate;
-	}
 	
-	
+	public String getfDate() {
+		return fDate;
+	}
+	public void setfDate(String fDate) {
+		this.fDate = fDate;
+	}
+	public String gettDate() {
+		return tDate;
+	}
+	public void settDate(String tDate) {
+		this.tDate = tDate;
+	}
 }

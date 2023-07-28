@@ -15,11 +15,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.dairy.dto.Response;
 import com.dairy.model.milkCollection.CombinationColletionWithQc;
 import com.dairy.model.milkCollection.MilkCollection;
+import com.dairy.model.milkCollection.MilkCollectionManualKG;
 import com.dairy.model.milkCollection.MilkCollectionQC;
+import com.dairy.model.milkCollection.SansthRateReduce;
 import com.dairy.model.sansthaMaster.PurRateExcleImport;
 import com.dairy.repository.milkCollection.CombCollectionQCRepo;
+import com.dairy.repository.milkCollection.MilkCollectionManualKGRepo;
 import com.dairy.repository.milkCollection.MilkCollectionQCRepo;
 import com.dairy.repository.milkCollection.MilkCollectionRepo;
+import com.dairy.repository.milkCollection.SansthRateReduceRepo;
 import com.dairy.repository.sansthaMaster.PurRateExcelImportRepo;
 import com.dairy.service.MilkCollectionService;
 import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
@@ -35,11 +39,18 @@ public class MilkCollectionController {
 
 	@Autowired
 	private MilkCollectionQCRepo milkCollectionQCRepo;
-	
+
 	@Autowired
-	private CombCollectionQCRepo combCollectionQCRepo ;
-	
-	@Autowired PurRateExcelImportRepo purRateExcelImportRepo;
+	private CombCollectionQCRepo combCollectionQCRepo;
+
+	@Autowired
+	private PurRateExcelImportRepo purRateExcelImportRepo;
+
+	@Autowired
+	private SansthRateReduceRepo sansthaReducerepo;
+
+	@Autowired
+	private MilkCollectionManualKGRepo milkCollectionManualKGRepo;
 
 //MILK COLLECTION	
 	// Save Milk Collection Details
@@ -74,7 +85,7 @@ public class MilkCollectionController {
 
 		List<MilkCollection> milkCollection2 = milkCollectionService.findByinwardDateBetween(milkCollection.getfDate(),
 				milkCollection.gettDate());
-		if (milkCollection2 != null && !milkCollection2.isEmpty()) {
+		if (!milkCollection2.isEmpty()) {
 			response.setStatus("Success");
 			response.setMessage("Data Found..!!");
 			response.setData(milkCollection2);
@@ -144,18 +155,17 @@ public class MilkCollectionController {
 
 		List<MilkCollectionQC> milkCollectionQC2 = milkCollectionService.findBydateBetween(milkCollectionQC.getfDate(),
 				milkCollectionQC.gettDate());
-		if (milkCollectionQC2!=null) {
+		if (!milkCollectionQC2.isEmpty()) {
 			response.setStatus("Success..");
 			response.setMessage("Data Found...!!");
 			response.setData(milkCollectionQC2);
-		}
-		else {
-			response .setStatus("not success");
+		} else {
+			response.setStatus("not success");
 		}
 		return response;
 	}
-	
-	public List<PurRateExcleImport> showgitmethod(){
+
+	public List<PurRateExcleImport> showgitmethod() {
 		return purRateExcelImportRepo.findAll();
 	}
 
@@ -185,13 +195,13 @@ public class MilkCollectionController {
 	@PostMapping("/saveCombinationCollectionWithQC")
 	@ResponseBody
 	public Response saveCombCollectionQc(@RequestBody CombinationColletionWithQc combcollectionQC) {
-		
+
 		Response response = new Response();
 		response.setStatus("Not Success");
 		response.setMessage("Fail To Saved Data..!");
-	
+
 		CombinationColletionWithQc combcollectionQC1 = milkCollectionService.saveCombCollectionQc(combcollectionQC);
-		if (combcollectionQC1 != null ) {
+		if (combcollectionQC1 != null) {
 			response.setStatus("Success");
 			response.setMessage("Data Saved...!!!");
 			response.setData(combcollectionQC1);
@@ -220,29 +230,128 @@ public class MilkCollectionController {
 		}
 
 	}
-	
-	//Retrieve Milk Collection Details By From date and To date
-	  
+
+	// Retrieve Milk Collection Details By From date and To date
+
 	@GetMapping("/getdatabydate")
-    @ResponseBody
-    public Response getdatabydate(@RequestBody CombinationColletionWithQc combcollectionQC) {
-        Response response = new Response();
+	@ResponseBody
+	public Response getdatabydate(@RequestBody CombinationColletionWithQc combcollectionQC) {
+		Response response = new Response();
 
-        response.setStatus("Not Success..");
-        response.setMessage("Data Not Found..!!");
+		response.setStatus("Not Success..");
+		response.setMessage("Data Not Found..!!");
 
-        List<CombinationColletionWithQc> combcollectionQC2 = milkCollectionService.findByinwardDateBetween1(
-            combcollectionQC.getfDate(),
-            combcollectionQC.gettDate()
-        );
+		List<CombinationColletionWithQc> combcollectionQC2 = milkCollectionService
+				.findByinwardDateBetween1(combcollectionQC.getfDate(), combcollectionQC.gettDate());
 
-        if (combcollectionQC2 != null && !combcollectionQC2.isEmpty()) {
-            response.setStatus("Success..");
-            response.setMessage("Data Found...!!");
-            response.setData(combcollectionQC2);
-        }
+		if (!combcollectionQC2.isEmpty()) {
+			response.setStatus("Success..");
+			response.setMessage("Data Found...!!");
+			response.setData(combcollectionQC2);
+		}
 
-        return response;
-    }
+		return response;
+	}
+
+	// Milk Collection Manual:KG
+	// Save Milk Collection Manual-KG
+	@PostMapping("/saveMilkCollectionManualKG")
+	@ResponseBody
+	public Response saveMilkCollectionManualKg(@RequestBody MilkCollectionManualKG milkcollectionmanualKG) {
+		Response response = new Response();
+		response.setStatus("Not Success");
+		response.setMessage("Data Not Saved..!!!");
+
+		MilkCollectionManualKG milkCollectionManualKG1 = milkCollectionService
+				.saveMilkCollectionManualKG(milkcollectionmanualKG);
+		if (milkCollectionManualKG1 != null) {
+			response.setStatus("Success");
+			response.setMessage("Data Saved...!!!");
+			response.setData(milkCollectionManualKG1);
+		}
+
+		return response;
+	}
+
+	// Retrieve Milk Collection Manual-KG Data By From Date and To Date
+	@GetMapping("/getMilkCollectionManualKGByDate")
+	@ResponseBody
+	public Response getMilkCollectionManualKGBydate(@RequestBody MilkCollectionManualKG milkCollectionManualKG) {
+
+		Response response = new Response();
+		response.setStatus("Not Success");
+		response.setMessage("Data Not Found");
+
+		List<MilkCollectionManualKG> milkCollectionManualKG1 = milkCollectionService
+				.findBycollectionDateBetween(milkCollectionManualKG.getFdate(), milkCollectionManualKG.getTdate());
+		if (!milkCollectionManualKG1.isEmpty()) {
+			response.setStatus("Success");
+			response.setMessage("Data Found..!!");
+			response.setData(milkCollectionManualKG1);
+		}
+		return response;
+	}
+
+	// Delete Milk Collection Manual-KG By Id
+	@PostMapping("/deleteMilkCollectionManualKGById")
+	@ResponseBody
+	public ResponseEntity<String> deleteMilkCollectionManualKGById(@RequestBody MilkCollectionManualKG milkCollectionManualKG) {
+		int i = milkCollectionManualKGRepo.deleteByid(milkCollectionManualKG.getId());
+
+		if (i > 0) {
+			return ResponseEntity.ok("Data Deleted Sucessfully..!");
+		} else {
+			return ResponseEntity.badRequest().body("Data not Deleted");
+		}
+
+	}
+	
+	// Retrieve Milk Collection Manual-kG All Data
+		@GetMapping("/getAllDataMilkCollectionManualKG")
+		@ResponseBody
+		public List<MilkCollectionManualKG> getAllDataMilkCollectionManualKG() {
+			return milkCollectionService.getAllMilkCollectionManualKGData();
+		}
+
+
+
+	// Save Sanstha Rate Reduce Data
+
+	@PostMapping("/saveSansthaRateReduce")
+	@ResponseBody
+	public Response saveSansthRatereduce(@RequestBody SansthRateReduce sansthaRateReduce) {
+
+		Response response = new Response();
+		response.setStatus("Not Success");
+		response.setMessage("Data Not Saved..!!!");
+
+		SansthRateReduce sansthaRateReduce2 = milkCollectionService.savereduceRate(sansthaRateReduce);
+		if (sansthaRateReduce2 != null) {
+			response.setStatus("Success");
+			response.setMessage("Data Saved...!!!");
+			response.setData(sansthaRateReduce2);
+		}
+
+		return response;
+	}
+
+	// Delete Sanstha Rate Reduce Data
+	@PostMapping("/deletesanstharateReduce")
+	@ResponseBody
+	public ResponseEntity<String> deletereducerateDataById(@RequestBody SansthRateReduce sansthaRateReduce) {
+		int i = sansthaReducerepo.deleteByid(sansthaRateReduce.getId());
+		if (i > 0) {
+			return ResponseEntity.ok("Delete Data Successfully");
+		} else {
+			return ResponseEntity.badRequest().body("Data Not Deleted..!!");
+		}
+	}
+
+	// Retreive Sanstha Rate Reduce Data
+	@GetMapping("/getSanstharatereduceData")
+	@ResponseBody
+	List<SansthRateReduce> getSanstharatereduceData() {
+		return milkCollectionService.findallSansthaRate();
+	}
 
 }

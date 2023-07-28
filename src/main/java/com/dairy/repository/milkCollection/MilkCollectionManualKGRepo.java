@@ -20,7 +20,9 @@ public interface MilkCollectionManualKGRepo extends JpaRepository<MilkCollection
 	@Transactional
 	public int deleteByid(int id);
 
-	List<MilkCollectionManualKG> findBycollectionDateBetween(String fdate, String tdate);
+	public List<MilkCollectionManualKG> findBycollectionDateBetween(String fdate, String tdate);
+
+	
 	
 	
 }
