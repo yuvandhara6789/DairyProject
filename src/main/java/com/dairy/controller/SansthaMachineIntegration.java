@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dairy.dto.Response;
 import com.dairy.model.sansthaMachineIntegration.MilkCollectionKg;
+import com.dairy.model.sansthaMachineIntegration.MilkCollectionQCMachine;
 import com.dairy.repository.sansthaMachineIntegration.MilkCollectionKgRepo;
+import com.dairy.repository.sansthaMachineIntegration.MilkCollectionQCMachineRepo;
 import com.dairy.service.SansthaMachineIntegrationService;
+import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
 
 @Controller
 public class SansthaMachineIntegration {
@@ -23,7 +26,11 @@ public class SansthaMachineIntegration {
 
 	@Autowired
 	private MilkCollectionKgRepo milkCollectionKgRepo;
-
+	
+	@Autowired
+	private MilkCollectionQCMachineRepo milkCollectionQCMachineRepo ;
+	
+	//MILK COLLECTION KG MACHINE
 	// save Milk Collection Kg
 	@PostMapping("/saveMilkCollectionKg")
 	@ResponseBody
@@ -86,7 +93,26 @@ public class SansthaMachineIntegration {
 		}
 
 		return resp1;
-
+	}
+	
+	//MILK COLLECTION QC MACHINE
+	//Save Milk Collection Qc Machine 
+	@PostMapping("saveMilkCollectionQCMachine")
+	@ResponseBody
+	public Response saveMilkCollectionQCMachine (@RequestBody MilkCollectionQCMachine milkCollectionQCMachine) {
+		
+		Response response = new Response();
+		response.setStatus("Not Success..");
+		response.setMessage("Data Not Saved..!!");
+		
+		MilkCollectionQCMachine milkQCMachine = sansthaMachineIntegrationService.savemilkQCMachine(milkCollectionQCMachine);
+		
+		if(milkQCMachine!=null) {
+			response.setStatus("Success..");
+			response.setMessage("Data Saved");
+			response.setStatus("milkQCMachine");
+		}
+		return response ;
 	}
 
 }
