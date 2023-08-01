@@ -40,9 +40,6 @@ public class SansthaMasterController {
 	@Autowired
 	private PerRateContractMasterRepo contractMasterRepo;
 	
-	@Autowired 
-	private FileStorageService fileStorageService;
-
 	@Autowired
 	private PurRateExcelImportRepo purRateExcelImportRepo;
 

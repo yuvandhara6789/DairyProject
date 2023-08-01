@@ -50,6 +50,7 @@ public class BulkMilkEntryController {
 	// ***VEHICLE ENTRY**
 	// Save Vehicle Entry Data...
 	@PostMapping("/saveVehicleEntry")
+	@ResponseBody
 	public Response saveVehicleEntry(@RequestBody VehicleEntry vehicleEntry) {
 		Response response = new Response();
 		response.setStatus("Not Sucess..");
@@ -66,6 +67,7 @@ public class BulkMilkEntryController {
 
 	// Get Vehicle Entry Data
 	@GetMapping("/getallVehicleEntry")
+	@ResponseBody
 	public List<VehicleEntry> getAllVehicleEntry() {
 		return bulkMilkEntryService.getAllVehicleEntry();
 	}
