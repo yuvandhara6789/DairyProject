@@ -62,12 +62,10 @@ public class MainMastersService {
 	
 	//AccountMaster 
 	public AccountMaster saveAccountMaster(AccountMaster accountMaster) {
-		// TODO Auto-generated method stub
 		return accountMasterRepo.save(accountMaster);
 	}
 
 	public List<AccountMaster> findAllAccountMaster() {
-		// TODO Auto-generated method stub
 		return accountMasterRepo.findAll();
 	}
 	
